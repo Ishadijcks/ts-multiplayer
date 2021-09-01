@@ -1,23 +1,20 @@
 import {Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn} from "typeorm";
-import {Wallet} from "./Wallet";
+import {Game} from "../game/Game.entity";
 
 @Entity()
-export class User {
+export class Player {
 
     @PrimaryGeneratedColumn()
     id: number;
 
     @Column()
-    firstName: string;
+    name: string;
 
-    @Column()
-    lastName: string;
 
-    @OneToOne(type => Wallet, wallet => wallet.user, {
+    @OneToOne(type => Game, game => game.player, {
         cascade: true
     })
     @JoinColumn()
-    wallet: Wallet;
-
+    game: Game;
 
 }
