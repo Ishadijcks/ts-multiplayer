@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import {createConnection} from "typeorm";
 import {User} from "./entity/User";
-import {Test} from "../../common/Test";
+import {Test} from "ts-multiplayer-common/Test";
 
 
 createConnection().then(async connection => {

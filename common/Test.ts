@@ -1,3 +1,3 @@
 export class Test {
-    value: number = 3;
+    value = 3;
 }

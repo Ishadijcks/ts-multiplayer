@@ -1,18 +1,19 @@
 {
-   "name": "ts-multiplayer",
-   "version": "0.0.1",
-   "description": "Awesome project developed with TypeORM.",
-   "devDependencies": {
-      "@types/node": "^8.0.29",
-      "ts-node": "3.3.0",
-      "typescript": "3.3.3333"
-   },
-   "dependencies": {
-      "mysql": "^2.14.1",
-      "reflect-metadata": "^0.1.10",
-      "typeorm": "0.2.37"
-   },
-   "scripts": {
-      "start": "ts-node src/index.ts"
-   }
+  "name": "ts-multiplayer",
+  "version": "0.0.1",
+  "description": "Awesome project developed with TypeORM.",
+  "devDependencies": {
+    "@types/node": "^8.0.29",
+    "ts-node": "3.3.0",
+    "typescript": "3.3.3333"
+  },
+  "dependencies": {
+    "mysql": "^2.14.1",
+    "reflect-metadata": "^0.1.10",
+    "ts-multiplayer-common": "file:../common",
+    "typeorm": "0.2.37"
+  },
+  "scripts": {
+    "start": "ts-node src/index.ts"
+  }
 }

@@ -1,0 +1,14 @@
+{
+  "name": "ts-multiplayer",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "common",
+    "frontend"
+  ],
+  "scripts": {
+    "backend": "npm run start -w ./backend",
+    "frontend": "npm run serve -w ./frontend"
+  }
+}

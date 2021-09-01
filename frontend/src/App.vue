@@ -8,11 +8,16 @@
 <script lang="ts">
 import Vue from 'vue';
 import HelloWorld from './components/HelloWorld.vue';
+import {Test} from "ts-multiplayer-common/Test";
 
 export default Vue.extend({
   name: 'App',
   components: {
     HelloWorld
+  },
+  mounted() {
+    let test = new Test()
+    console.log(test);
   }
 });
 </script>
