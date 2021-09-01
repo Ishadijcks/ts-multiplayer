@@ -1,11 +1,11 @@
-import {PlayerEntity} from "ts-multiplayer/src/entity/Player";
 import {Socket} from "socket.io";
-import {GameEntity} from "ts-multiplayer/src/game/Game";
+import {Player} from "ts-multiplayer/src/entity/Player.entity";
+import {Game} from "ts-multiplayer/src/game/Game.entity";
 
 export class ServerSocketEvent {
-    game: GameEntity;
-    player: PlayerEntity
-    socket: Socket
+    public game: Game;
 
-
+    constructor(public player: Player, public socket: Socket) {
+        this.game = player.game;
+    }
 }
