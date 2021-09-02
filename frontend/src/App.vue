@@ -1,24 +1,20 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <WalletComponent :wallet="wallet"/>
+    <Login></Login>
+    <WalletComponent />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 import WalletComponent from '@/components/Wallet.vue';
-import {Wallet} from "@/model/Wallet";
+import Login from "@/components/Login.vue";
 
 export default Vue.extend({
   name: 'App',
   components: {
+    Login,
     WalletComponent,
-  },
-  data() {
-    return {
-      wallet: new Wallet(),
-    }
   },
 });
 </script>

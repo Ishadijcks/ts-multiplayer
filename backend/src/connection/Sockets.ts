@@ -1,9 +1,8 @@
-import {ServerEventName} from "ts-multiplayer-common/enums/ServerEventName";
-import {Connection, createConnection} from "typeorm";
+import {Connection} from "typeorm";
 import {Player} from "../entity/Player.entity";
-import {Game} from "../game/Game.entity";
-import {Wallet} from "../entity/Wallet.entity";
-import {IncreaseMoneyEvent} from "../game/features/IncreaseMoneyEvent";
+import {Game} from "../game/Game";
+
+let allEvents = require('../game');
 
 const express = require('express');
 const app = express();
@@ -20,18 +19,30 @@ const io = new Server(server, {
 export class Sockets {
     public static ormConnection: Connection;
 
-    public static init(ormConnection: Connection) {
+    public static init(game: Game, ormConnection: Connection, debug: boolean = false) {
         this.ormConnection = ormConnection;
 
-        io.on('connection', (socket) => {
+        io.on('connection', async (socket) => {
+            socket.emit("money", 3)
             console.log('a user connected');
-            socket.on('money/increase', async (socket) => {
-                let player = await this.ormConnection.manager.findOne(Player, 1, {relations: ["game", "game.wallet"]});
 
-                let event = new IncreaseMoneyEvent(player, socket)
-                await event.callback({amount: 1})
-                return ormConnection.manager.save(player)
-            });
+            const userName = 'isha'
+            Object.values(allEvents).forEach((eventConstructor: any) => {
+
+                let eventInstance = new eventConstructor(game, socket, userName)
+
+                socket.on(eventInstance.event, async (args) => {
+                    if (debug) {
+                        console.log("Player", userName, "activated", eventInstance.event, "with arguments", args);
+                    }
+                    await eventInstance.callback(args || {})
+
+                    const player = game.playerManager.getPlayer(userName);
+                    await game.databaseManager.savePlayer(player);
+                    return ormConnection.manager.save(player)
+                });
+            })
+
         });
 
         server.listen(3000, () => {

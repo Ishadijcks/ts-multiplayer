@@ -1,3 +1,7 @@
 export enum ServerEventName {
-    IncreaseMoney = 'money/increase'
+    CreateAccount = 'account/create',
+    Login = 'account/login',
+
+
+    IncreaseMoney = 'money/increase',
 }

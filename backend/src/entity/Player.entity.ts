@@ -1,5 +1,5 @@
 import {Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn} from "typeorm";
-import {Game} from "../game/Game.entity";
+import {Wallet} from "./Wallet.entity";
 
 @Entity()
 export class Player {
@@ -8,13 +8,16 @@ export class Player {
     id: number;
 
     @Column()
-    name: string;
+    userName: string;
 
-
-    @OneToOne(type => Game, game => game.player, {
+    @OneToOne(type => Wallet, wallet => wallet.player, {
         cascade: true
     })
     @JoinColumn()
-    game: Game;
+    wallet: Wallet = new Wallet();
 
+
+    constructor(userName: string) {
+        this.userName = userName;
+    }
 }

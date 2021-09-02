@@ -1,14 +1,14 @@
 import {Column, Entity, OneToOne, PrimaryGeneratedColumn} from "typeorm";
 import {IWallet} from "ts-multiplayer-common/interfaces/IWallet";
-import {Game} from "../game/Game.entity";
+import {Player} from "./Player.entity";
 
 @Entity()
 export class Wallet implements IWallet {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @OneToOne(type => Game, game => game.wallet)
-    game: Game;
+    @OneToOne(type => Player, player => player.wallet)
+    player: Player;
 
     @Column()
     money: number = 0;
