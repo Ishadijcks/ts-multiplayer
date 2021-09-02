@@ -11,8 +11,12 @@ export class CreateAccountEvent extends ServerSocketEvent implements IServerEven
         if (!userName) {
             throw new Error("Invalid username");
         }
+        const existingPlayer = await this.game.databaseManager.loadPlayer(userName);
+        if (existingPlayer) {
+            throw new Error("Username already exists");
+        }
         await this.game.databaseManager.createPlayer(userName)
-
+        this.emitSuccess("Account created");
     }
 
 

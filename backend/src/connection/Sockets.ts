@@ -35,11 +35,15 @@ export class Sockets {
                     if (debug) {
                         console.log("Player", userName, "activated", eventInstance.event, "with arguments", args);
                     }
-                    await eventInstance.callback(args || {})
+                    try {
+                        await eventInstance.callback(args || {})
 
-                    const player = game.playerManager.getPlayer(userName);
-                    await game.databaseManager.savePlayer(player);
-                    return ormConnection.manager.save(player)
+                        // TODO(Isha) not save always
+                        const player = game.playerManager.getPlayer(userName);
+                        await game.databaseManager.savePlayer(player);
+                    } catch (e) {
+                        eventInstance.emitError(e.message);
+                    }
                 });
             })
 

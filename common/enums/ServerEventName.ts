@@ -4,4 +4,5 @@ export enum ServerEventName {
 
 
     IncreaseMoney = 'money/increase',
+    GameMessage = 'game/message',
 }

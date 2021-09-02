@@ -2,6 +2,7 @@
   <div>
     <input type="text" v-model="userName">
     <button @click="login">Login!</button>
+    <button @click="create">Register!</button>
   </div>
 </template>
 
@@ -19,6 +20,9 @@ export default Vue.extend({
   methods: {
     login() {
       this.$socket.client.emit(ServerEventName.Login, {userName: this.userName})
+    },
+    create() {
+      this.$socket.client.emit(ServerEventName.CreateAccount, {userName: this.userName})
     }
   },
 

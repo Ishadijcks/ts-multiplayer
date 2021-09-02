@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Login></Login>
-    <WalletComponent />
+    <WalletComponent/>
   </div>
 </template>
 
@@ -9,6 +9,7 @@
 import Vue from 'vue';
 import WalletComponent from '@/components/Wallet.vue';
 import Login from "@/components/Login.vue";
+import {ServerEventName} from "ts-multiplayer-common/enums/ServerEventName";
 
 export default Vue.extend({
   name: 'App',
@@ -16,6 +17,12 @@ export default Vue.extend({
     Login,
     WalletComponent,
   },
+  mounted() {
+    // Subscribe in mounted to use variable topic names
+    this.$socket.$subscribe(ServerEventName.GameMessage, (payload: any) => {
+      console.log(payload.type, payload.content)
+    });
+  }
 });
 </script>
 

@@ -19,14 +19,12 @@ export default Vue.extend({
   },
   methods: {
     increase() {
-      console.log("sending", ServerEventName.IncreaseMoney)
       this.$socket.client.emit(ServerEventName.IncreaseMoney, {amount: 3})
     }
   },
   sockets: {
     money(amount: number) {
       this.$data.wallet.money = amount;
-      console.log(amount)
     }
   }
 
