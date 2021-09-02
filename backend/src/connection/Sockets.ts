@@ -54,7 +54,10 @@ export class Sockets {
                         console.log("Player", eventInstance.socket.userName, "activated", eventInstance.event, "with arguments", args);
                     }
                     try {
-                        await eventInstance.callback(args || {})
+                        const shouldUpdate = await eventInstance.callback(args || {})
+                        if (shouldUpdate) {
+                            this.updatePlayer(eventInstance.player);
+                        }
                         await game.databaseManager.savePlayer(eventInstance.player);
                     } catch (e) {
                         eventInstance.emitError(e.message);

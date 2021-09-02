@@ -8,7 +8,7 @@ export class CreateAccountEvent extends ServerSocketEvent implements IServerEven
     description = "Create a new account"
     args = "userName";
 
-    async callback({userName, token} = {userName: '', token: ''}) {
+    async callback({userName, token} = {userName: '', token: ''}): Promise<boolean> {
         if (!userName) {
             throw new Error("Invalid username");
         }
@@ -24,6 +24,7 @@ export class CreateAccountEvent extends ServerSocketEvent implements IServerEven
             await this.game.databaseManager.createPlayer(userName, uid)
             this.emitSuccess("Account created");
         })
+        return true;
 
     }
 

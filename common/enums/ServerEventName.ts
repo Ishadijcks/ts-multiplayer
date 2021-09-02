@@ -3,6 +3,6 @@ export enum ServerEventName {
     Login = 'account/login',
     Logout = 'account/logout',
 
-    IncreaseMoney = 'money/increase',
+    BuyMoneyUpgrade = 'money/increase',
     GameMessage = 'game/message',
 }

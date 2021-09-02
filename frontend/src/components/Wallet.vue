@@ -17,7 +17,7 @@ export default class Wallet extends Vue {
 
 
   increase() {
-    SocketHelper.emit(ServerEventName.IncreaseMoney, {amount: 3})
+    SocketHelper.emit(ServerEventName.BuyMoneyUpgrade, {amount: 3})
   }
 }
 

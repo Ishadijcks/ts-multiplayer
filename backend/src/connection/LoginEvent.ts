@@ -8,7 +8,7 @@ export class LoginEvent extends ServerSocketEvent implements IServerEvent {
     description = "Log a user in"
     args = "token";
 
-    async callback({token} = {token: ''}) {
+    async callback({token} = {token: ''}): Promise<boolean> {
         if (!token) {
             throw new Error("Invalid token");
         }
@@ -30,5 +30,6 @@ export class LoginEvent extends ServerSocketEvent implements IServerEvent {
         console.log(`${new Date()} Player ${player.userName} logged in`)
         await this.game.databaseManager.savePlayer(player);
         this.emitSuccess("Login successful")
+        return true;
     }
 }

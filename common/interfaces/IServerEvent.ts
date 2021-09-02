@@ -5,6 +5,7 @@ export interface IServerEvent {
     description: string;
     args: string;
 
-    callback: (args) => void;
+    // Returns whether or not the player should be updated
+    callback: (args) => Promise<boolean>;
 
 }
