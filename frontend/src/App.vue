@@ -1,6 +1,9 @@
 <template>
   <div id="app">
     <p>Player count {{playerCount}}</p>
+    <div class="bg-red-300">
+      Test
+    </div>
     <Login></Login>
     <WalletComponent/>
   </div>
@@ -9,7 +12,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import WalletComponent from '@/components/Wallet.vue';
-import Login from "@/components/Login.vue";
+import Login from "@/components/connection/Login.vue";
 import {ServerEventName} from "ts-multiplayer-common/enums/ServerEventName";
 import {SocketHelper} from "@/model/SocketHelper";
 
@@ -21,7 +24,8 @@ export default Vue.extend({
   },
   data() {
     return {
-      playerCount: 0
+      playerCount: 0,
+      isRegistered: false,
     }
   },
   mounted() {
