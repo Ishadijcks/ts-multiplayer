@@ -1,6 +1,7 @@
 import {Connection} from "typeorm";
 import {Player} from "../entity/Player.entity";
 import {Game} from "../game/Game";
+import {LogoutEvent} from "./LogoutEvent";
 
 let allEvents = require('../game');
 
@@ -18,19 +19,35 @@ const io = new Server(server, {
 
 export class Sockets {
     public static ormConnection: Connection;
+    public static game: Game
 
     public static init(game: Game, ormConnection: Connection, debug: boolean = false) {
+        this.game = game;
         this.ormConnection = ormConnection;
 
         io.on('connection', async (socket) => {
             socket.emit("money", 3)
             console.log('a user connected');
 
-            const userName = 'isha'
+            //TODO(Isha) get username from socket
+            const userName = 'asdasd'
+
+            socket.on('disconnect', async () => {
+                const logoutEvent = new LogoutEvent(game, socket, userName)
+                console.log(`Player ${userName} disconnected`);
+                try {
+                    if (!logoutEvent.player || !logoutEvent.player.isLoggedIn) {
+                        return;
+                    }
+                    await logoutEvent.callback({userName});
+                } catch (e) {
+                    console.log(e.message)
+                }
+            });
+
+            // Register all event to their socket channels.
             Object.values(allEvents).forEach((eventConstructor: any) => {
-
                 let eventInstance = new eventConstructor(game, socket, userName)
-
                 socket.on(eventInstance.event, async (args) => {
                     if (debug) {
                         console.log("Player", userName, "activated", eventInstance.event, "with arguments", args);
@@ -46,11 +63,15 @@ export class Sockets {
                     }
                 });
             })
-
         });
+
 
         server.listen(3000, () => {
             console.log('listening on *:3000');
         });
+    }
+
+    public static broadCastPlayerCount() {
+        io.emit('player-count', this.game.playerManager.getPlayerCount())
     }
 }

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <input type="text" v-model="userName">
+    <input type="text" v-model="Global.userName">
     <button @click="login">Login!</button>
     <button @click="create">Register!</button>
   </div>
@@ -9,20 +9,22 @@
 <script lang="ts">
 import Vue from "vue";
 import {ServerEventName} from "ts-multiplayer-common/enums/ServerEventName";
+import {SocketHelper} from "@/model/SocketHelper";
+import {Global} from "@/model/Global";
 
 export default Vue.extend({
   name: 'Login',
   data() {
     return {
-      userName: ''
+      Global: Global
     }
   },
   methods: {
     login() {
-      this.$socket.client.emit(ServerEventName.Login, {userName: this.userName})
+      SocketHelper.emit(ServerEventName.Login)
     },
     create() {
-      this.$socket.client.emit(ServerEventName.CreateAccount, {userName: this.userName})
+      SocketHelper.emit(ServerEventName.CreateAccount);
     }
   },
 

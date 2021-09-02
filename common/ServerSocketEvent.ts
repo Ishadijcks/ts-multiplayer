@@ -6,15 +6,18 @@ import {GameMessageType} from "./enums/GameMessageType";
 import {IGameMessage} from "./interfaces/IGameMessage";
 
 export class ServerSocketEvent {
-    public player: Player;
     public game: Game;
     public socket: Socket;
+    public userName: string;
 
+    get player(): Player {
+        return this.game.playerManager.getPlayer(this.userName);
+    }
 
     constructor(game: Game, socket: Socket, userName: string) {
         this.game = game;
         this.socket = socket;
-        this.player = this.game.playerManager.getPlayer(userName);
+        this.userName = userName;
     }
 
     private emitMessage(message: IGameMessage) {

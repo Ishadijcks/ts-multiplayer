@@ -10,6 +10,12 @@ export class Player {
     @Column()
     userName: string;
 
+    @Column()
+    lastSeen: Date = new Date();
+
+    @Column()
+    isLoggedIn: boolean = false;
+
     @OneToOne(type => Wallet, wallet => wallet.player, {
         cascade: true
     })
