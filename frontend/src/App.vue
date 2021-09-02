@@ -1,7 +1,7 @@
 <template>
   <div>
     <AppBar :player-count="playerCount" :user-id="player.userId" :user-name="player.userName"></AppBar>
-
+    {{player}}
     <div v-if="!isLoggedIn" class="">
       <Login></Login>
     </div>
@@ -9,6 +9,7 @@
     <div v-if="isLoggedIn">
       <Wallet :wallet="player.wallet"></Wallet>
     </div>
+    <Register></Register>
 
   </div>
 </template>
@@ -21,10 +22,11 @@ import {IPlayer} from "ts-multiplayer-common/interfaces/IPlayer";
 import AppBar from "@/components/AppBar.vue";
 import Wallet from "@/components/Wallet.vue";
 
-import {Component, Prop, Vue} from 'vue-property-decorator';
+import {Component, Vue} from 'vue-property-decorator';
+import Register from "@/components/connection/Register.vue";
 
 @Component({
-  components: {Wallet, Login, AppBar}
+  components: {Register, Wallet, Login, AppBar}
 })
 export default class App extends Vue {
   playerCount = 0;

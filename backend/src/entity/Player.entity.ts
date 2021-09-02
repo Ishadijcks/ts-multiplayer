@@ -1,6 +1,7 @@
 import {Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn} from "typeorm";
 import {Wallet} from "../game/features/wallet/Wallet.entity";
 import {IPlayer} from "ts-multiplayer-common/interfaces/IPlayer";
+import {Skills} from "../game/features/skills/Skills.entity";
 
 @Entity()
 export class Player implements IPlayer {
@@ -25,12 +26,19 @@ export class Player implements IPlayer {
     @JoinColumn()
     wallet: Wallet = new Wallet();
 
+    @OneToOne(type => Skills, skills => skills.player, {
+        cascade: true
+    })
+    @JoinColumn()
+    skills: Skills = new Skills();
+
 
     serialize(): IPlayer {
         return {
             userName: this.userName,
             userId: this.userId,
             wallet: this.wallet.serialize(),
+            skills: this.skills.serialize(),
         }
     }
 
