@@ -12,7 +12,7 @@
 import {Component, Prop, Vue} from 'vue-property-decorator';
 
 @Component
-export default class Wallet extends Vue {
+export default class AppBar extends Vue {
   @Prop({required: true}) private playerCount!: string;
   @Prop({required: true}) private userId!: string;
   @Prop({required: true}) private userName!: string;

@@ -22,6 +22,10 @@ export class Skills implements ISkills {
         cascade: true
     })
     @JoinColumn()
-    woodcutting: ExpLevel = new ExpLevel(3, [1, 2, 3], 0);
+    woodcutting: ExpLevel = new ExpLevel(3, [10, 100, 500], 0);
+
+    tick(delta: number) {
+        this.woodcutting.gainExperience(1 * delta);
+    }
 }
 

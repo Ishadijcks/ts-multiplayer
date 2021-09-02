@@ -1,9 +1,10 @@
 import {Column, Entity, OneToOne, PrimaryGeneratedColumn} from "typeorm";
 import {IExpLevel} from "ts-multiplayer-common/game/features/skills/IExpLevel";
 import {Skills} from "./Skills.entity";
+import {DiscreteExpLevel} from "ts-multiplayer-common/game/features/skills/DiscreteExpLevel";
 
 @Entity()
-export class ExpLevel implements IExpLevel {
+export class ExpLevel extends DiscreteExpLevel implements IExpLevel {
 
     @PrimaryGeneratedColumn()
     id: number;
@@ -13,24 +14,23 @@ export class ExpLevel implements IExpLevel {
 
     @Column()
     exp: number;
-    expToLevel: number[];
-    maxLevel: number;
 
 
-    constructor(maxLevel: number, expToLevel: number[], exp: number = 0) {
-        this.maxLevel = maxLevel;
-        this.expToLevel = expToLevel;
-        this.exp = exp;
+    constructor(maxLevel: number = 0, expPerLevel: number[] = [], baseExp: number = 0) {
+        super(maxLevel, expPerLevel, baseExp);
+    }
+
+    getExpNeededForLevel(level: number): number {
+        return this.expPerLevel[level - 1];
     }
 
     serialize(): IExpLevel {
         return {
             exp: this.exp,
-            expToLevel: this.expToLevel,
+            expPerLevel: this.expPerLevel,
             maxLevel: this.maxLevel,
         }
     }
-
 
 }
 

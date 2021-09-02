@@ -8,6 +8,7 @@
 
     <div v-if="isLoggedIn">
       <Wallet :wallet="player.wallet"></Wallet>
+      <Skills :skills="player.skills"></Skills>
     </div>
     <Register></Register>
 
@@ -24,9 +25,10 @@ import Wallet from "@/components/Wallet.vue";
 
 import {Component, Vue} from 'vue-property-decorator';
 import Register from "@/components/connection/Register.vue";
+import Skills from "@/components/Skills.vue";
 
 @Component({
-  components: {Register, Wallet, Login, AppBar}
+  components: {Skills, Register, Wallet, Login, AppBar}
 })
 export default class App extends Vue {
   playerCount = 0;
