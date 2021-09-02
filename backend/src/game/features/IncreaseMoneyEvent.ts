@@ -11,6 +11,7 @@ export class IncreaseMoneyEvent extends ServerSocketEvent implements IServerEven
         if (amount < 1) {
             throw new Error("Amount is too low")
         }
+        console.log(this.player);
         this.player.wallet.money += amount;
 
         this.socket.emit('money', this.player.wallet.money);

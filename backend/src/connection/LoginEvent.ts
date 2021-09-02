@@ -1,29 +1,34 @@
 import {IServerEvent} from "ts-multiplayer-common/interfaces/IServerEvent";
 import {ServerEventName} from "ts-multiplayer-common/enums/ServerEventName";
 import {ServerSocketEvent} from "ts-multiplayer-common/ServerSocketEvent";
+import {FirebaseHelper} from "./FirebaseHelper";
 
 export class LoginEvent extends ServerSocketEvent implements IServerEvent {
     event = ServerEventName.Login;
     description = "Log a user in"
-    args = "userName";
+    args = "token";
 
-    async callback({userName} = {userName: ''}) {
-        if (!userName) {
-            throw new Error("Invalid username");
+    async callback({token} = {token: ''}) {
+        if (!token) {
+            throw new Error("Invalid token");
         }
-        const player = await this.game.databaseManager.loadPlayer(userName);
+        const decodedToken = await FirebaseHelper.decodeToken(token);
+
+        const uid = decodedToken.uid;
+        const player = await this.game.databaseManager.loadPlayer(uid);
         if (!player) {
-            throw new Error(`Player ${userName} does not exist`)
+            throw new Error("Could not login");
         }
+
         if (player.isLoggedIn) {
-            throw new Error(`Cannot log player ${userName} in twice`);
+            throw new Error(`Cannot log player ${player.userName} in twice`);
         }
         player.lastSeen = new Date();
         player.isLoggedIn = true;
         this.game.playerManager.addPlayer(player);
+        this.setPlayer(player);
+        console.log(`${new Date()} Player ${player.userName} logged in`)
         await this.game.databaseManager.savePlayer(player);
         this.emitSuccess("Login successful")
     }
-
-
 }

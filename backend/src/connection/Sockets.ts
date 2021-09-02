@@ -2,6 +2,7 @@ import {Connection} from "typeorm";
 import {Player} from "../entity/Player.entity";
 import {Game} from "../game/Game";
 import {LogoutEvent} from "./LogoutEvent";
+import * as console from "console";
 
 let allEvents = require('../game');
 
@@ -26,20 +27,20 @@ export class Sockets {
         this.ormConnection = ormConnection;
 
         io.on('connection', async (socket) => {
+            this.broadCastPlayerCount();
             socket.emit("money", 3)
             console.log('a user connected');
 
-            //TODO(Isha) get username from socket
-            const userName = 'asdasd'
-
             socket.on('disconnect', async () => {
-                const logoutEvent = new LogoutEvent(game, socket, userName)
-                console.log(`Player ${userName} disconnected`);
+                const logoutEvent = new LogoutEvent(game, socket)
+                if (logoutEvent.player) {
+                    console.log(`Player ${logoutEvent.player.userName} disconnected`);
+                }
                 try {
                     if (!logoutEvent.player || !logoutEvent.player.isLoggedIn) {
                         return;
                     }
-                    await logoutEvent.callback({userName});
+                    await logoutEvent.callback();
                 } catch (e) {
                     console.log(e.message)
                 }
@@ -47,17 +48,15 @@ export class Sockets {
 
             // Register all event to their socket channels.
             Object.values(allEvents).forEach((eventConstructor: any) => {
-                let eventInstance = new eventConstructor(game, socket, userName)
+                let eventInstance = new eventConstructor(game, socket)
                 socket.on(eventInstance.event, async (args) => {
+                    console.log(socket.userName);
                     if (debug) {
-                        console.log("Player", userName, "activated", eventInstance.event, "with arguments", args);
+                        console.log("Player", eventInstance.socket.userName, "activated", eventInstance.event, "with arguments", args);
                     }
                     try {
                         await eventInstance.callback(args || {})
-
-                        // TODO(Isha) not save always
-                        const player = game.playerManager.getPlayer(userName);
-                        await game.databaseManager.savePlayer(player);
+                        await game.databaseManager.savePlayer(eventInstance.player);
                     } catch (e) {
                         eventInstance.emitError(e.message);
                     }
@@ -72,6 +71,7 @@ export class Sockets {
     }
 
     public static broadCastPlayerCount() {
+        console.log("broadcating count",  this.game.playerManager.getPlayerCount())
         io.emit('player-count', this.game.playerManager.getPlayerCount())
     }
 }

@@ -9,6 +9,7 @@
 import {Wallet} from "@/model/Wallet";
 import {ServerEventName} from "ts-multiplayer-common/enums/ServerEventName";
 import Vue from "vue";
+import {SocketHelper} from "@/model/SocketHelper";
 
 export default Vue.extend({
   name: 'Wallet',
@@ -19,7 +20,7 @@ export default Vue.extend({
   },
   methods: {
     increase() {
-      this.$socket.client.emit(ServerEventName.IncreaseMoney, {amount: 3})
+      SocketHelper.emit(ServerEventName.IncreaseMoney, {amount: 3})
     }
   },
   sockets: {

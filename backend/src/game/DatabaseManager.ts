@@ -9,12 +9,12 @@ export class DatabaseManager {
         this.connection = connection;
     }
 
-    public async loadPlayer(userName: string): Promise<Player> {
-        return await this.connection.manager.findOne(Player, {userName: userName});
+    public async loadPlayer(userId: string): Promise<Player> {
+        return await this.connection.manager.findOne(Player, {userId: userId});
     }
 
-    createPlayer(userName: string) {
-        const player = new Player(userName);
+    createPlayer(userName: string, userId: string) {
+        const player = new Player(userName, userId);
         return this.connection.manager.save(player)
     }
 

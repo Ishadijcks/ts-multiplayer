@@ -4,6 +4,7 @@ import {Connection, createConnection} from "typeorm";
 import {Game} from "./game/Game";
 import {DatabaseManager} from "./game/DatabaseManager";
 import {PlayerManager} from "./game/PlayerManager";
+import {FirebaseHelper} from "./connection/FirebaseHelper";
 
 createConnection().then((connection: Connection) => {
 
@@ -12,6 +13,7 @@ createConnection().then((connection: Connection) => {
         new PlayerManager(),
     )
     Sockets.init(game, connection, true)
-
+    FirebaseHelper.init();
+    game.start();
 }).catch(error => console.log(error));
 

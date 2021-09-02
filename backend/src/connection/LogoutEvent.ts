@@ -7,16 +7,13 @@ export class LogoutEvent extends ServerSocketEvent implements IServerEvent {
     description = "Log a user out"
     args = "userName";
 
-    async callback({userName} = {userName: ''}) {
-        if (!userName) {
-            throw new Error("Invalid username");
-        }
+    async callback() {
         const player = this.player;
         if (!player) {
-            throw new Error(`Cannot logout player ${userName} as it is not logged in`)
+            throw new Error(`Cannot logout player ${this.player.userName} as it is not logged in`)
         }
         if (!player.isLoggedIn) {
-            throw new Error(`Cannot log player ${userName} out if not logged in`);
+            throw new Error(`Cannot log player ${this.player.userName} out if not logged in`);
         }
         this.game.playerManager.removePlayer(player);
         player.lastSeen = new Date();

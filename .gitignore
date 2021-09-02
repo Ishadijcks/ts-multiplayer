@@ -6,3 +6,5 @@ tmp/
 temp/
 
 frontend/dist/
+
+backend/serviceAccountKey.json

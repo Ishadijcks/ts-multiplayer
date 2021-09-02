@@ -7,6 +7,8 @@ export class Player {
     @PrimaryGeneratedColumn()
     id: number;
 
+    @Column() userId: string;
+
     @Column()
     userName: string;
 
@@ -23,7 +25,8 @@ export class Player {
     wallet: Wallet = new Wallet();
 
 
-    constructor(userName: string) {
+    constructor(userName: string, userId: string) {
         this.userName = userName;
+        this.userId = userId;
     }
 }

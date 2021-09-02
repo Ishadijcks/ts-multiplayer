@@ -1,23 +1,33 @@
-import {Socket} from "socket.io";
 import {Player} from "ts-multiplayer/src/entity/Player.entity";
 import {Game} from "ts-multiplayer/src/game/Game";
 import {ServerEventName} from "./enums/ServerEventName";
 import {GameMessageType} from "./enums/GameMessageType";
 import {IGameMessage} from "./interfaces/IGameMessage";
+import {SocketWithUsername} from "ts-multiplayer/src/connection/SocketWithUsername";
 
 export class ServerSocketEvent {
     public game: Game;
-    public socket: Socket;
-    public userName: string;
+    public socket: SocketWithUsername;
 
     get player(): Player {
-        return this.game.playerManager.getPlayer(this.userName);
+        return this.game.playerManager.getPlayer(this.socket.userName);
     }
 
-    constructor(game: Game, socket: Socket, userName: string) {
+    public setPlayer(player: Player) {
+        if (!player) {
+            this.socket.userName = null;
+            this.socket.userId = null;
+            return;
+        }
+
+        this.socket.userName = player.userName;
+        this.socket.userId = player.userId;
+    }
+
+
+    constructor(game: Game, socket: SocketWithUsername) {
         this.game = game;
         this.socket = socket;
-        this.userName = userName;
     }
 
     private emitMessage(message: IGameMessage) {
