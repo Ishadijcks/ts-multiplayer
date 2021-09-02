@@ -15,7 +15,6 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
 import Login from "@/components/connection/Login.vue";
 import {ServerEventName} from "ts-multiplayer-common/enums/ServerEventName";
 import {SocketHelper} from "@/model/SocketHelper";
@@ -23,24 +22,19 @@ import {IPlayer} from "ts-multiplayer-common/interfaces/IPlayer";
 import AppBar from "@/components/AppBar.vue";
 import Wallet from "@/components/Wallet.vue";
 
-export default Vue.extend({
-  name: 'App',
-  components: {
-    Wallet,
-    AppBar,
-    Login,
-  },
-  data() {
-    return {
-      playerCount: 0,
-      player: {},
-    }
-  },
-  computed: {
-    isLoggedIn() {
-      return this.player.userName != null;
-    }
-  },
+import {Component, Prop, Vue} from 'vue-property-decorator';
+
+@Component({
+  components: {Wallet, Login, AppBar}
+})
+export default class App extends Vue {
+  playerCount: number = 0;
+  player: IPlayer = {} as IPlayer;
+
+  get isLoggedIn() {
+    return this.player.userName != null;
+  }
+
   mounted() {
     SocketHelper.client = this.$socket.client;
     // Subscribe in mounted to use variable topic names
@@ -54,7 +48,7 @@ export default Vue.extend({
       this.player = newPlayer
     });
   }
-});
+}
 </script>
 
 <style>

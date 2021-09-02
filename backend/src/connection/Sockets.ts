@@ -50,7 +50,6 @@ export class Sockets {
             Object.values(allEvents).forEach((eventConstructor: any) => {
                 let eventInstance = new eventConstructor(game, socket)
                 socket.on(eventInstance.event, async (args) => {
-                    console.log(socket.userName);
                     if (debug) {
                         console.log("Player", eventInstance.socket.userName, "activated", eventInstance.event, "with arguments", args);
                     }

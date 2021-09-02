@@ -13,8 +13,14 @@ export class Wallet implements IWallet {
     @Column()
     money: number = 0;
 
+    @Column()
+    producerUpgradeBought: number = 0;
+
+
+
     serialize(): IWallet {
         return {
+            producerUpgradeBought: this.producerUpgradeBought,
             money: this.money,
         }
     }
