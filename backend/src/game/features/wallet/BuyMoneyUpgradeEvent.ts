@@ -2,7 +2,7 @@ import {IServerEvent} from "ts-multiplayer-common/interfaces/IServerEvent";
 import {ServerEventName} from "ts-multiplayer-common/enums/ServerEventName";
 import {ServerSocketEvent} from "ts-multiplayer-common/ServerSocketEvent";
 
-export class BuyMoneyUpgrade extends ServerSocketEvent implements IServerEvent {
+export class BuyMoneyUpgradeEvent extends ServerSocketEvent implements IServerEvent {
     event = ServerEventName.BuyMoneyUpgrade;
     description = "buy a multiplier"
     args = "";

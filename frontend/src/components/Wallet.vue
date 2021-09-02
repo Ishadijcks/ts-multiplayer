@@ -1,7 +1,7 @@
 <template>
   <div>
-    Test ({{ wallet.money }})
-    <button @click="increase">Increase!</button>
+    Money: ({{ wallet.money }}) ({{1 + wallet.producerUpgradeBought}}/s)
+    <button class="btn" @click="increase">Upgrade (-10)</button>
   </div>
 </template>
 

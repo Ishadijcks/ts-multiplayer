@@ -1,5 +1,5 @@
 import {Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn} from "typeorm";
-import {Wallet} from "./Wallet.entity";
+import {Wallet} from "../game/features/wallet/Wallet.entity";
 import {IPlayer} from "ts-multiplayer-common/interfaces/IPlayer";
 
 @Entity()

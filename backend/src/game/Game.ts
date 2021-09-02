@@ -20,7 +20,7 @@ export class Game {
 
     tick() {
         this.playerManager.onlinePlayers.forEach((player: Player) => {
-            player.wallet.money++;
+            player.wallet.tick(this.TICK_DURATION);
             this.databaseManager.savePlayer(player);
             Sockets.updatePlayer(player);
         })

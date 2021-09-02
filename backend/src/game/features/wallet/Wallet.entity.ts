@@ -1,9 +1,10 @@
 import {Column, Entity, OneToOne, PrimaryGeneratedColumn} from "typeorm";
 import {IWallet} from "ts-multiplayer-common/interfaces/IWallet";
-import {Player} from "./Player.entity";
+import {Player} from "../../../entity/Player.entity";
 
 @Entity()
 export class Wallet implements IWallet {
+
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -16,7 +17,9 @@ export class Wallet implements IWallet {
     @Column()
     producerUpgradeBought: number = 0;
 
-
+    tick(delta: number) {
+        this.money += delta * (1 + this.producerUpgradeBought);
+    }
 
     serialize(): IWallet {
         return {

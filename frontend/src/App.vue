@@ -1,7 +1,6 @@
 <template>
   <div>
     <AppBar :player-count="playerCount" :user-id="player.userId" :user-name="player.userName"></AppBar>
-    {{ player }}
 
     <div v-if="!isLoggedIn" class="">
       <Login></Login>
@@ -28,7 +27,7 @@ import {Component, Prop, Vue} from 'vue-property-decorator';
   components: {Wallet, Login, AppBar}
 })
 export default class App extends Vue {
-  playerCount: number = 0;
+  playerCount = 0;
   player: IPlayer = {} as IPlayer;
 
   get isLoggedIn() {
