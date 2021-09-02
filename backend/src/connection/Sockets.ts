@@ -2,7 +2,6 @@ import {Connection} from "typeorm";
 import {Player} from "../entity/Player.entity";
 import {Game} from "../game/Game";
 import {LogoutEvent} from "./LogoutEvent";
-import * as console from "console";
 
 let allEvents = require('../game');
 
@@ -32,6 +31,7 @@ export class Sockets {
             console.log('a user connected');
 
             socket.on('disconnect', async () => {
+                console.log('disconnected');
                 const logoutEvent = new LogoutEvent(game, socket)
                 if (logoutEvent.player) {
                     console.log(`Player ${logoutEvent.player.userName} disconnected`);
@@ -70,8 +70,12 @@ export class Sockets {
         });
     }
 
+    public static updatePlayer(player: Player) {
+        //TODO(Isha) only send diff
+        io.emit('game-state', player.serialize());
+    }
+
     public static broadCastPlayerCount() {
-        console.log("broadcating count",  this.game.playerManager.getPlayerCount())
         io.emit('player-count', this.game.playerManager.getPlayerCount())
     }
 }

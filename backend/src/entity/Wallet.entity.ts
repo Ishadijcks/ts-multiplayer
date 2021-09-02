@@ -12,5 +12,11 @@ export class Wallet implements IWallet {
 
     @Column()
     money: number = 0;
+
+    serialize(): IWallet {
+        return {
+            money: this.money,
+        }
+    }
 }
 

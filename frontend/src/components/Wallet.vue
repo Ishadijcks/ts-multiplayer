@@ -1,35 +1,26 @@
 <template>
   <div>
-   Test ({{wallet.money}})
+    Test ({{ wallet.money }})
     <button @click="increase">Increase!</button>
   </div>
 </template>
 
 <script lang="ts">
-import {Wallet} from "@/model/Wallet";
 import {ServerEventName} from "ts-multiplayer-common/enums/ServerEventName";
-import Vue from "vue";
+import {IWallet} from "ts-multiplayer-common/interfaces/IWallet";
 import {SocketHelper} from "@/model/SocketHelper";
+import {Component, Prop, Vue} from 'vue-property-decorator';
 
-export default Vue.extend({
-  name: 'Wallet',
-  data() {
-    return {
-      wallet: new Wallet()
-    }
-  },
-  methods: {
-    increase() {
-      SocketHelper.emit(ServerEventName.IncreaseMoney, {amount: 3})
-    }
-  },
-  sockets: {
-    money(amount: number) {
-      this.$data.wallet.money = amount;
-    }
+@Component
+export default class Wallet extends Vue {
+  @Prop({required : true}) private wallet!: IWallet;
+
+
+  increase() {
+    SocketHelper.emit(ServerEventName.IncreaseMoney, {amount: 3})
   }
+}
 
-})
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

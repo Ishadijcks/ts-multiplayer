@@ -1,31 +1,44 @@
 <template>
-  <div id="app">
-    <p>Player count {{playerCount}}</p>
-    <div class="bg-red-300">
-      Test
+  <div>
+    <AppBar :player-count="playerCount" :user-id="player.userId" :user-name="player.userName"></AppBar>
+    {{ player }}
+
+    <div v-if="!isLoggedIn" class="">
+      <Login></Login>
     </div>
-    <Login></Login>
-    <WalletComponent/>
+
+    <div v-if="isLoggedIn">
+      <Wallet :wallet="player.wallet"></Wallet>
+    </div>
+
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import WalletComponent from '@/components/Wallet.vue';
 import Login from "@/components/connection/Login.vue";
 import {ServerEventName} from "ts-multiplayer-common/enums/ServerEventName";
 import {SocketHelper} from "@/model/SocketHelper";
+import {IPlayer} from "ts-multiplayer-common/interfaces/IPlayer";
+import AppBar from "@/components/AppBar.vue";
+import Wallet from "@/components/Wallet.vue";
 
 export default Vue.extend({
   name: 'App',
   components: {
+    Wallet,
+    AppBar,
     Login,
-    WalletComponent,
   },
   data() {
     return {
       playerCount: 0,
-      isRegistered: false,
+      player: {},
+    }
+  },
+  computed: {
+    isLoggedIn() {
+      return this.player.userName != null;
     }
   },
   mounted() {
@@ -35,19 +48,15 @@ export default Vue.extend({
       console.log(payload.type, payload.content)
     });
     this.$socket.$subscribe('player-count', (payload: any) => {
-      this.playerCount = payload
+      this.playerCount = payload;
+    });
+    this.$socket.$subscribe('game-state', (newPlayer: IPlayer) => {
+      this.player = newPlayer
     });
   }
 });
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>

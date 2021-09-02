@@ -1,6 +1,7 @@
 import {DatabaseManager} from "./DatabaseManager";
 import {PlayerManager} from "./PlayerManager";
 import {Player} from "../entity/Player.entity";
+import {Sockets} from "../connection/Sockets";
 
 export class Game {
     readonly TICK_DURATION = 1 // second
@@ -19,7 +20,9 @@ export class Game {
 
     tick() {
         this.playerManager.onlinePlayers.forEach((player: Player) => {
+            player.wallet.money++;
             this.databaseManager.savePlayer(player);
+            Sockets.updatePlayer(player);
         })
     }
 

@@ -5,6 +5,7 @@
     "strict": true,
     "jsx": "preserve",
     "importHelpers": true,
+    "experimentalDecorators": true,
     "moduleResolution": "node",
     "skipLibCheck": true,
     "esModuleInterop": true,
