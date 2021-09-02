@@ -15,5 +15,12 @@ createConnection().then((connection: Connection) => {
     Sockets.init(game, connection, true)
     FirebaseHelper.init();
     game.start();
+
+    process.on('SIGINT', async function () {
+        console.log("Shutting down...")
+        game.logoutAllPlayers().then(() => {
+            process.exit();
+        });
+    });
 }).catch(error => console.log(error));
 

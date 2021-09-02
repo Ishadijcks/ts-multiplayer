@@ -26,4 +26,12 @@ export class Game {
         })
     }
 
+    async logoutAllPlayers() {
+        console.log("Logging out all players");
+        for (const player of this.playerManager.onlinePlayers) {
+            player.isLoggedIn = false;
+            player.lastSeen = new Date();
+            await this.databaseManager.savePlayer(player);
+        }
+    }
 }
