@@ -21,13 +21,15 @@ export class Player implements IPlayer {
     isLoggedIn: boolean = false;
 
     @OneToOne(type => Wallet, wallet => wallet.player, {
-        cascade: true
+        cascade: true,
+        eager: true,
     })
     @JoinColumn()
     wallet: Wallet = new Wallet();
 
     @OneToOne(type => Skills, skills => skills.player, {
-        cascade: true
+        cascade: true,
+        eager: true,
     })
     @JoinColumn()
     skills: Skills = new Skills();

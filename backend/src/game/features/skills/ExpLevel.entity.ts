@@ -9,7 +9,7 @@ export class ExpLevel extends DiscreteExpLevel implements IExpLevel {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @OneToOne(type => Skills, skills => skills.woodcutting)
+    @OneToOne(type => Skills)
     skills: Skills;
 
     @Column()

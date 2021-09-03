@@ -10,7 +10,7 @@ export class DatabaseManager {
     }
 
     public async loadPlayer(userId: string): Promise<Player> {
-        return await this.connection.manager.findOne(Player, {userId: userId}, {relations: ['wallet', 'skills']});
+        return await this.connection.manager.findOne(Player, {userId: userId});
     }
 
     createPlayer(userName: string, userId: string) {

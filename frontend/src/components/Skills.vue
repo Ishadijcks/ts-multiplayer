@@ -1,7 +1,13 @@
 <template>
   <div>
-    {{ woodCutting }}
-    <igt-exp-level :exp-level="woodCutting"></igt-exp-level>
+    <div class="p-2 m-2 flex flex-col border-2">
+      Woodcutting
+      <igt-exp-level :exp-level="woodCutting"></igt-exp-level>
+    </div>
+    <div class="p-2 m-2 flex flex-col border-2">
+      Mining
+      <igt-exp-level :exp-level="mining"></igt-exp-level>
+    </div>
   </div>
 </template>
 
@@ -19,6 +25,10 @@ export default class Skills extends Vue {
 
   get woodCutting() {
     return DiscreteExpLevel.fromJson(this.skills.woodcutting);
+  }
+
+  get mining() {
+    return DiscreteExpLevel.fromJson(this.skills.mining);
   }
 
 }

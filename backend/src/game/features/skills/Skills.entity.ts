@@ -14,18 +14,28 @@ export class Skills implements ISkills {
 
     serialize(): ISkills {
         return {
-            woodcutting: this.woodcutting.serialize()
+            woodcutting: this.woodcutting.serialize(),
+            mining: this.mining.serialize(),
         }
     }
 
     @OneToOne(type => ExpLevel, expLevel => expLevel.skills, {
-        cascade: true
+        cascade: true,
+        eager: true
     })
     @JoinColumn()
     woodcutting: ExpLevel = new ExpLevel(3, [10, 100, 500], 0);
 
+    @OneToOne(type => ExpLevel, expLevel => expLevel.skills, {
+        cascade: true,
+        eager: true
+    })
+    @JoinColumn()
+    mining: ExpLevel = new ExpLevel(3, [10, 100, 500], 0);
+
     tick(delta: number) {
         this.woodcutting.gainExperience(1 * delta);
+        this.mining.gainExperience(1 * delta);
     }
 }
 
