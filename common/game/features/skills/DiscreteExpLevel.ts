@@ -12,6 +12,9 @@ export class DiscreteExpLevel extends IgtExpLevel {
         if (maxLevel !== expPerLevel.length) {
             throw new Error("MaxLevel is not equal to length of ExpPerLevel");
         }
+        if (expPerLevel[expPerLevel.length - 1] !== Number.MAX_SAFE_INTEGER) {
+            expPerLevel.push(Number.MAX_SAFE_INTEGER);
+        }
         this.expPerLevel = expPerLevel;
     }
 

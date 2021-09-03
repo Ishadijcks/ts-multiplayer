@@ -1,4 +1,4 @@
-import {Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn} from "typeorm";
+import {AfterLoad, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn} from "typeorm";
 import {Player} from "../../../entity/Player.entity";
 import {ISkills} from "ts-multiplayer-common/game/features/skills/ISkills";
 import {ExpLevel} from "./ExpLevel.entity";
@@ -24,14 +24,23 @@ export class Skills implements ISkills {
         eager: true
     })
     @JoinColumn()
-    woodcutting: ExpLevel = new ExpLevel(3, [10, 100, 500], 0);
+    woodcutting: ExpLevel = new ExpLevel();
 
     @OneToOne(type => ExpLevel, expLevel => expLevel.skills, {
         cascade: true,
         eager: true
     })
     @JoinColumn()
-    mining: ExpLevel = new ExpLevel(3, [10, 100, 500], 0);
+    mining: ExpLevel = new ExpLevel();
+
+    @AfterLoad()
+    update() {
+        // TODO load all balancing from a centralized place
+        this.mining.maxLevel = 3;
+        this.mining.expPerLevel = [10, 100, 500]
+        this.woodcutting.maxLevel = 3
+        this.woodcutting.expPerLevel = [10, 100, 500]
+    }
 
     tick(delta: number) {
         this.woodcutting.gainExperience(1 * delta);

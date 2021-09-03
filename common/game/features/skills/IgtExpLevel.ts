@@ -17,6 +17,10 @@ export abstract class IgtExpLevel {
         this.exp += amount;
     }
 
+    isMaxLevel(): boolean {
+        return this.getLevel() === this.maxLevel;
+    }
+
     getLevel(): number {
         for (let i = 1; i <= this.maxLevel; i++) {
             if (this.exp < this.getExpNeededForLevel(i)) {
