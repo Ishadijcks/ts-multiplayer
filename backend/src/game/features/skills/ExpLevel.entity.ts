@@ -27,8 +27,6 @@ export class ExpLevel extends DiscreteExpLevel implements IExpLevel {
     serialize(): IExpLevel {
         return {
             exp: this.exp,
-            expPerLevel: this.expPerLevel,
-            maxLevel: this.maxLevel,
         }
     }
 

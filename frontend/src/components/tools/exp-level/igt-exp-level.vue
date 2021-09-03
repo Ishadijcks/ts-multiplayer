@@ -29,6 +29,7 @@ export default class IgtExpLevelComponent extends Vue {
   }
 
   get progress() {
+    console.log("progress")
     return this.expLevel.getLevelProgress();
   }
 

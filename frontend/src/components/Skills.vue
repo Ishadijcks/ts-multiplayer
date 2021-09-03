@@ -15,7 +15,7 @@
 import {Component, Prop, Vue} from 'vue-property-decorator';
 import {ISkills} from "ts-multiplayer-common/game/features/skills/ISkills";
 import IgtExpLevel from "@/components/tools/exp-level/igt-exp-level.vue";
-import {DiscreteExpLevel} from "ts-multiplayer-common/game/features/skills/DiscreteExpLevel";
+import {woodcutting, mining} from "ts-multiplayer-common/content";
 
 @Component({
   components: {IgtExpLevel}
@@ -23,12 +23,17 @@ import {DiscreteExpLevel} from "ts-multiplayer-common/game/features/skills/Discr
 export default class Skills extends Vue {
   @Prop({required: true}) private skills!: ISkills;
 
+  private localWoodcutting = woodcutting;
+  private localMining = mining;
+
   get woodCutting() {
-    return DiscreteExpLevel.fromJson(this.skills.woodcutting);
+    this.localWoodcutting.exp = this.skills.woodcutting.exp;
+    return this.localWoodcutting
   }
 
   get mining() {
-    return DiscreteExpLevel.fromJson(this.skills.mining);
+    this.localMining.exp = this.skills.mining.exp
+    return this.localMining;
   }
 
 }

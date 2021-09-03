@@ -22,9 +22,4 @@ export class DiscreteExpLevel extends IgtExpLevel {
         return this.expPerLevel[level - 1];
     }
 
-
-    public static fromJson(data: IExpLevel): DiscreteExpLevel {
-        return new DiscreteExpLevel(data.maxLevel, data.expPerLevel, data.exp);
-    }
-
 }
