@@ -37,6 +37,11 @@ export class Player implements IPlayer {
 
     lastSerialized;
 
+    constructor(userName: string, userId: string) {
+        this.userName = userName;
+        this.userId = userId;
+    }
+
     serialize(): IPlayer {
         return {
             userName: this.userName,
