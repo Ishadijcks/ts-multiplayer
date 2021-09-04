@@ -27,7 +27,6 @@ export class Sockets {
 
         io.on('connection', async (socket) => {
             this.broadCastPlayerCount();
-            socket.emit("money", 3)
             console.log('a user connected');
 
             socket.on('disconnect', async () => {

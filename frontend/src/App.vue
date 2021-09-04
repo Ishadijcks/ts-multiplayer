@@ -61,7 +61,7 @@ export default class App extends Vue {
       this.playerCount = payload;
     });
     this.$socket.$subscribe('game-state', (newPlayer: IPlayer) => {
-      this.isLoggedIn = true;
+      player.isLoggedIn = true;
       this.player = _.merge(this.player, newPlayer);
     });
   }

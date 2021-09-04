@@ -15,15 +15,14 @@ export class CreateAccountEvent extends ServerSocketEvent implements IServerEven
         if (!token) {
             throw new Error("Invalid token");
         }
-        FirebaseHelper.decodeToken(token).then(async token => {
-            const uid = token.uid;
-            const existingPlayer = await this.game.databaseManager.loadPlayer(uid);
-            if (existingPlayer) {
-                return;
-            }
-            await this.game.databaseManager.createPlayer(userName, uid)
-            this.emitSuccess("Account created");
-        })
+        const decodedToken = await FirebaseHelper.decodeToken(token);
+        const uid = decodedToken.uid;
+        const existingPlayer = await this.game.databaseManager.loadPlayer(uid);
+        if (existingPlayer) {
+            throw new Error("You already have an account registered");
+        }
+        await this.game.databaseManager.createPlayer(userName, uid)
+        this.emitSuccess("Account created");
         return true;
 
     }
