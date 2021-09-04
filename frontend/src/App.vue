@@ -27,6 +27,7 @@ import Register from "@/components/connection/Register.vue";
 import IgtSkills from "@/components/igt-skills.vue";
 import IgtWallet from "@/components/igt-wallet.vue";
 import {player} from "ts-multiplayer-common/content";
+import _ from "lodash";
 
 @Component({
   components: {IgtWallet, IgtSkills, Register, Login, AppBar}
@@ -49,8 +50,7 @@ export default class App extends Vue {
       this.playerCount = payload;
     });
     this.$socket.$subscribe('game-state', (newPlayer: IPlayer) => {
-      console.log(newPlayer);
-      // this.player = newPlayer
+      this.player = _.merge(this.player, newPlayer);
     });
   }
 }

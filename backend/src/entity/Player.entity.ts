@@ -1,7 +1,8 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn} from "typeorm";
+import {Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn} from "typeorm";
 import {Wallet} from "../game/features/wallet/Wallet.entity";
 import {IPlayer} from "ts-multiplayer-common/interfaces/IPlayer";
 import {Skills} from "../game/features/skills/Skills.entity";
+import {Diff} from "ts-multiplayer-common/util/Diff";
 
 @Entity()
 export class Player implements IPlayer {
@@ -34,6 +35,7 @@ export class Player implements IPlayer {
     @JoinColumn()
     skills: Skills = new Skills();
 
+    lastSerialized;
 
     serialize(): IPlayer {
         return {
@@ -42,10 +44,21 @@ export class Player implements IPlayer {
             wallet: this.wallet.serialize(),
             skills: this.skills.serialize(),
         }
+
     }
 
-    constructor(userName: string, userId: string) {
-        this.userName = userName;
-        this.userId = userId;
+    /**
+     * Calculate the diff between this and the last serialization
+     */
+    serialized_diff() {
+        const serialized = this.serialize();
+        if (!this.lastSerialized) {
+            this.lastSerialized = serialized;
+            return serialized;
+        }
+        const diff = Diff.diff(this.lastSerialized, serialized);
+        this.lastSerialized = serialized;
+        return diff;
     }
+
 }

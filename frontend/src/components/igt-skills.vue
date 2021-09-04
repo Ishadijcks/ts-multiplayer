@@ -1,6 +1,5 @@
 <template>
   <div>
-    {{skills}}
     <div class="p-2 m-2 flex flex-col border-2">
       Woodcutting
       <igt-exp-level :exp-level="skills.woodcutting"></igt-exp-level>

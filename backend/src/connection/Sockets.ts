@@ -73,8 +73,7 @@ export class Sockets {
     }
 
     public static updatePlayer(player: Player) {
-        //TODO(Isha) only send diff
-        io.emit('game-state', player.serialize());
+        io.emit('game-state', player.serialized_diff());
     }
 
     public static broadCastPlayerCount() {
