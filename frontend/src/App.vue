@@ -22,7 +22,7 @@ import {SocketHelper} from "@/model/SocketHelper";
 import {IPlayer} from "ts-multiplayer-common/interfaces/IPlayer";
 import AppBar from "@/components/AppBar.vue";
 
-import {Component, Vue} from 'vue-property-decorator';
+import {Component, Vue, Watch} from 'vue-property-decorator';
 import Register from "@/components/connection/Register.vue";
 import IgtSkills from "@/components/igt-skills.vue";
 import IgtWallet from "@/components/igt-wallet.vue";
@@ -35,9 +35,17 @@ import _ from "lodash";
 export default class App extends Vue {
   playerCount = 0;
   player = player;
+  isLoggedIn = false;
 
-  get isLoggedIn() {
-    return this.player.userName != "";
+  @Watch('isSocketConnected')
+  isSocketConnectedChanged(val: string, oldVal: string) {
+    if(!val) {
+      this.isLoggedIn = false;
+    }
+  }
+
+  get isSocketConnected() {
+    return this.$socket.connected
   }
 
   mounted() {
@@ -50,6 +58,7 @@ export default class App extends Vue {
       this.playerCount = payload;
     });
     this.$socket.$subscribe('game-state', (newPlayer: IPlayer) => {
+      this.isLoggedIn = true;
       this.player = _.merge(this.player, newPlayer);
     });
   }

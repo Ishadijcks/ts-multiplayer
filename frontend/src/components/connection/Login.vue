@@ -3,12 +3,8 @@
     <div id="firebaseui-auth-container"></div>
     <input type="text" v-model="Global.userName">
 
-    <div v-if="!firebaseHelper.userSet">
-      Not connected
-    </div>
-    <div v-else>Connected
+    <div v-if="firebaseHelper.userSet">
       <button @click="login">Login!</button>
-
     </div>
   </div>
 </template>
