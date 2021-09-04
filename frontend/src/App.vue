@@ -1,6 +1,12 @@
 <template>
   <div>
-    <AppBar :player-count="playerCount" :user-id="player.userId" :user-name="player.userName"></AppBar>
+    <AppBar
+        :socket-connected="isSocketConnected"
+        :firebase-connected="firebaseHelper.userSet"
+        :logged-in="player.isLoggedIn"
+        :player-count="playerCount"
+        :user-id="player.userId"
+        :user-name="player.userName"></AppBar>
     {{ player }}
     <div v-if="!player.isLoggedIn" class="">
       <Login></Login>
@@ -10,7 +16,8 @@
       <IgtWallet :wallet="player.wallet"></IgtWallet>
       <IgtSkills :skills="player.skills"></IgtSkills>
     </div>
-    <Register></Register>
+
+    <Register v-if="canRegister"></Register>
 
   </div>
 </template>
@@ -36,6 +43,7 @@ import {firebaseHelper} from "@/main";
 export default class App extends Vue {
   playerCount = 0;
   player = player;
+  firebaseHelper = firebaseHelper;
 
   @Watch('isSocketConnected')
   isSocketConnectedChanged(val: string, oldVal: string) {
@@ -45,6 +53,11 @@ export default class App extends Vue {
     if (val && firebaseHelper.userSet) {
       SocketHelper.emit(ServerEventName.Login)
     }
+  }
+
+
+  get canRegister(): boolean {
+    return firebaseHelper.userSet && this.isSocketConnected && !player.isLoggedIn;
   }
 
   get isSocketConnected() {
