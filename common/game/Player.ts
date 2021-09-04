@@ -1,4 +1,4 @@
-import {IPlayer} from "../interfaces/IPlayer";
+import {IPlayer} from "./IPlayer";
 import {Wallet} from "./features/wallet/Wallet";
 import {Skills} from "./features/skills/Skills";
 

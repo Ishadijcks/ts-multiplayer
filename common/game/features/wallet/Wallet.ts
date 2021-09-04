@@ -1,4 +1,4 @@
-import {IWallet} from "../../../interfaces/IWallet";
+import {IWallet} from "./IWallet";
 
 export class Wallet implements IWallet {
     money = 0;

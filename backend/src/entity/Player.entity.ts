@@ -1,6 +1,6 @@
 import {Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn} from "typeorm";
 import {Wallet} from "../game/features/wallet/Wallet.entity";
-import {IPlayer} from "ts-multiplayer-common/interfaces/IPlayer";
+import {IPlayer} from "ts-multiplayer-common/game/IPlayer";
 import {Skills} from "../game/features/skills/Skills.entity";
 import {Diff} from "ts-multiplayer-common/util/Diff";
 

@@ -1,5 +1,5 @@
-import {IWallet} from "./IWallet";
-import {ISkills} from "../game/features/skills/ISkills";
+import {IWallet} from "./features/wallet/IWallet";
+import {ISkills} from "./features/skills/ISkills";
 
 export interface IPlayer {
     userName: string;

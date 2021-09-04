@@ -19,7 +19,7 @@
 import Login from "@/components/connection/Login.vue";
 import {ServerEventName} from "ts-multiplayer-common/enums/ServerEventName";
 import {SocketHelper} from "@/model/SocketHelper";
-import {IPlayer} from "ts-multiplayer-common/interfaces/IPlayer";
+import {IPlayer} from "ts-multiplayer-common/game/IPlayer";
 import AppBar from "@/components/AppBar.vue";
 
 import {Component, Vue, Watch} from 'vue-property-decorator';
