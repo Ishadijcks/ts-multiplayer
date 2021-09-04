@@ -41,6 +41,7 @@ export class Player implements IPlayer {
         return {
             userName: this.userName,
             userId: this.userId,
+            isLoggedIn: this.isLoggedIn,
             wallet: this.wallet.serialize(),
             skills: this.skills.serialize(),
         }

@@ -1,12 +1,12 @@
 <template>
   <div>
     <AppBar :player-count="playerCount" :user-id="player.userId" :user-name="player.userName"></AppBar>
-    {{player}}
-    <div v-if="!isLoggedIn" class="">
+    {{ player }}
+    <div v-if="!player.isLoggedIn" class="">
       <Login></Login>
     </div>
 
-    <div v-if="isLoggedIn">
+    <div v-if="player.isLoggedIn">
       <IgtWallet :wallet="player.wallet"></IgtWallet>
       <IgtSkills :skills="player.skills"></IgtSkills>
     </div>
@@ -28,6 +28,7 @@ import IgtSkills from "@/components/igt-skills.vue";
 import IgtWallet from "@/components/igt-wallet.vue";
 import {player} from "ts-multiplayer-common/content";
 import _ from "lodash";
+import {firebaseHelper} from "@/main";
 
 @Component({
   components: {IgtWallet, IgtSkills, Register, Login, AppBar}
@@ -35,12 +36,14 @@ import _ from "lodash";
 export default class App extends Vue {
   playerCount = 0;
   player = player;
-  isLoggedIn = false;
 
   @Watch('isSocketConnected')
   isSocketConnectedChanged(val: string, oldVal: string) {
-    if(!val) {
-      this.isLoggedIn = false;
+    if (!val) {
+      player.isLoggedIn = false;
+    }
+    if (val && firebaseHelper.userSet) {
+      SocketHelper.emit(ServerEventName.Login)
     }
   }
 
