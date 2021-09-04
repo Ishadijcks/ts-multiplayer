@@ -7,8 +7,8 @@
     </div>
 
     <div v-if="isLoggedIn">
-      <Wallet :wallet="player.wallet"></Wallet>
-      <Skills :skills="player.skills"></Skills>
+      <IgtWallet :wallet="player.wallet"></IgtWallet>
+      <IgtSkills :skills="player.skills"></IgtSkills>
     </div>
     <Register></Register>
 
@@ -21,21 +21,22 @@ import {ServerEventName} from "ts-multiplayer-common/enums/ServerEventName";
 import {SocketHelper} from "@/model/SocketHelper";
 import {IPlayer} from "ts-multiplayer-common/interfaces/IPlayer";
 import AppBar from "@/components/AppBar.vue";
-import Wallet from "@/components/Wallet.vue";
 
 import {Component, Vue} from 'vue-property-decorator';
 import Register from "@/components/connection/Register.vue";
-import Skills from "@/components/Skills.vue";
+import IgtSkills from "@/components/igt-skills.vue";
+import IgtWallet from "@/components/igt-wallet.vue";
+import {player} from "ts-multiplayer-common/content";
 
 @Component({
-  components: {Skills, Register, Wallet, Login, AppBar}
+  components: {IgtWallet, IgtSkills, Register, Login, AppBar}
 })
 export default class App extends Vue {
   playerCount = 0;
-  player: IPlayer = {} as IPlayer;
+  player = player;
 
   get isLoggedIn() {
-    return this.player.userName != null;
+    return this.player.userName != "";
   }
 
   mounted() {
@@ -48,7 +49,8 @@ export default class App extends Vue {
       this.playerCount = payload;
     });
     this.$socket.$subscribe('game-state', (newPlayer: IPlayer) => {
-      this.player = newPlayer
+      console.log(newPlayer);
+      // this.player = newPlayer
     });
   }
 }

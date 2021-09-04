@@ -2,7 +2,7 @@ import {AfterLoad, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn} from "t
 import {Player} from "../../../entity/Player.entity";
 import {ISkills} from "ts-multiplayer-common/game/features/skills/ISkills";
 import {ExpLevel} from "./ExpLevel.entity";
-import {mining, woodcutting} from "ts-multiplayer-common/content";
+import {player} from "ts-multiplayer-common/content";
 
 @Entity()
 export class Skills implements ISkills {
@@ -37,15 +37,13 @@ export class Skills implements ISkills {
     @AfterLoad()
     update() {
         // TODO load all balancing from a centralized place
-        this.mining.maxLevel = mining.maxLevel;
-        this.mining.expPerLevel = mining.expPerLevel;
-        this.woodcutting.maxLevel = woodcutting.maxLevel
-        this.woodcutting.expPerLevel = woodcutting.expPerLevel
+        this.mining.maxLevel = player.skills.mining.maxLevel;
+        this.mining.expPerLevel = player.skills.mining.expPerLevel;
+        this.woodcutting.maxLevel = player.skills.woodcutting.maxLevel
+        this.woodcutting.expPerLevel = player.skills.woodcutting.expPerLevel
     }
 
     tick(delta: number) {
-        console.log(this.mining);
-        console.log("mining level", this.mining.getLevel())
         this.woodcutting.gainExperience(1 * delta);
         this.mining.gainExperience(1 * delta);
     }

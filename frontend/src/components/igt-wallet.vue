@@ -7,13 +7,13 @@
 
 <script lang="ts">
 import {ServerEventName} from "ts-multiplayer-common/enums/ServerEventName";
-import {IWallet} from "ts-multiplayer-common/interfaces/IWallet";
 import {SocketHelper} from "@/model/SocketHelper";
 import {Component, Prop, Vue} from 'vue-property-decorator';
+import {Wallet} from "ts-multiplayer-common/game/features/wallet/Wallet";
 
 @Component
-export default class Wallet extends Vue {
-  @Prop({required : true}) private wallet!: IWallet;
+export default class IgtWallet extends Vue {
+  @Prop({required : true}) private wallet!: Wallet;
 
 
   increase() {
