@@ -1,7 +1,9 @@
 <template>
   <div>
-    Money: ({{ wallet.money }}) ({{1 + wallet.producerUpgradeBought}}/s)
-    <button class="btn" @click="increase">Upgrade (-10)</button>
+    <div class="m-2 p-2 flex flex-row items-center space-x-2">
+      <span>Money: ({{ wallet.money }}) ({{ 1 + wallet.producerUpgradeBought }}/s)</span>
+      <button class="btn btn-green" @click="increase">Upgrade (-10)</button>
+    </div>
   </div>
 </template>
 
@@ -13,7 +15,7 @@ import {Wallet} from "ts-multiplayer-common/game/features/wallet/Wallet";
 
 @Component
 export default class IgtWallet extends Vue {
-  @Prop({required : true}) private wallet!: Wallet;
+  @Prop({required: true}) private wallet!: Wallet;
 
 
   increase() {

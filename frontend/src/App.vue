@@ -7,10 +7,8 @@
         :player-count="playerCount"
         :user-id="player.userId"
         :user-name="player.userName"></AppBar>
-    {{ player }}
-    <div v-if="!player.isLoggedIn" class="">
-      <Login></Login>
-    </div>
+
+    <Login></Login>
 
     <div v-if="player.isLoggedIn">
       <IgtWallet :wallet="player.wallet"></IgtWallet>

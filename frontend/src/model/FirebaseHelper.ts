@@ -4,6 +4,8 @@ import 'firebaseui/dist/firebaseui.css'
 import AuthUI = firebaseui.auth.AuthUI;
 import User = firebase.User;
 import {firebaseHelper} from "@/main";
+import {SocketHelper} from "@/model/SocketHelper";
+import {ServerEventName} from "ts-multiplayer-common/enums/ServerEventName";
 
 export class FirebaseHelper {
     public ui: AuthUI;
@@ -64,7 +66,7 @@ export class FirebaseHelper {
             user.getIdToken(true).then((idToken: string) => {
                 this.token = idToken;
                 console.log("token", this.token)
-
+                SocketHelper.emit(ServerEventName.Login)
             }).catch(function (error: any) {
                 // Handle error
             });

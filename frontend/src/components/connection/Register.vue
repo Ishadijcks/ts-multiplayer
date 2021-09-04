@@ -1,7 +1,11 @@
 <template>
   <div>
-    <input type="text" v-model="Global.userName">
-    <button @click="create">Register!</button>
+    <div class="flex flex-row justify-center">
+      <div class="my-16 w-72 flex flex-col border-2 p-4">
+        <input class="input-primary" placeholder="username" type="text" v-model="Global.userName">
+        <button class="btn btn-green" @click="create">Register!</button>
+      </div>
+    </div>
   </div>
 </template>
 
