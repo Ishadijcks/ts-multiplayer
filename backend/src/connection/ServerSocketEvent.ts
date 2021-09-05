@@ -1,8 +1,8 @@
 import {Player} from "ts-multiplayer/src/entity/Player.entity";
 import {Game} from "ts-multiplayer/src/game/Game";
-import {ServerEventName} from "./enums/ServerEventName";
-import {GameMessageType} from "./enums/GameMessageType";
-import {IGameMessage} from "./interfaces/IGameMessage";
+import {ServerEventName} from "ts-multiplayer-common/enums/ServerEventName";
+import {GameMessageType} from "ts-multiplayer-common/enums/GameMessageType";
+import {IGameMessage} from "ts-multiplayer-common/interfaces/IGameMessage";
 import {SocketWithUsername} from "ts-multiplayer/src/connection/SocketWithUsername";
 
 export class ServerSocketEvent {

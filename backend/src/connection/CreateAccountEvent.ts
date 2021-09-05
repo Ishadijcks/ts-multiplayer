@@ -1,8 +1,8 @@
 import {IServerEvent} from "ts-multiplayer-common/interfaces/IServerEvent";
 import {ServerEventName} from "ts-multiplayer-common/enums/ServerEventName";
-import {ServerSocketEvent} from "ts-multiplayer-common/ServerSocketEvent";
 import {FirebaseHelper} from "./FirebaseHelper";
 import {LoginEvent} from "./LoginEvent";
+import {ServerSocketEvent} from "./ServerSocketEvent";
 
 export class CreateAccountEvent extends ServerSocketEvent implements IServerEvent {
     event = ServerEventName.CreateAccount;
